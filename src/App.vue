@@ -1,17 +1,27 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <NavigationsMenu></NavigationsMenu>
+  <main>
+    <router-view></router-view>
+  </main>
+  <!-- Passer totalPoints til PointsDisplay -->
+  <PointsDisplay :points="totalPoints"></PointsDisplay>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import NavigationsMenu from './components/NavigationsMenu.vue';
+import PointsDisplay from './components/PointsDisplay.vue';
 
 export default {
-  name: 'App',
   components: {
-    HelloWorld
-  }
+    NavigationsMenu,
+    PointsDisplay,
+  },
+  created() {
+  console.log('ElUse component created');
 }
+
+  
+};
 </script>
 
 <style>
@@ -20,7 +30,17 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: black;
   margin-top: 60px;
+}
+body {
+  background-color: #f0f0f0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  align-content: center;
+  height: fit-content;
+
 }
 </style>
