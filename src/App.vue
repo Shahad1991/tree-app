@@ -1,7 +1,7 @@
 <template>
   <NavigationsMenu></NavigationsMenu>
   <main>
-    <router-view></router-view>
+    <router-view @update:points="updatePoints"></router-view>
   </main>
   <!-- Passer totalPoints til PointsDisplay -->
   <PointsDisplay :points="totalPoints"></PointsDisplay>
@@ -16,11 +16,16 @@ export default {
     NavigationsMenu,
     PointsDisplay,
   },
-  created() {
-  console.log('ElUse component created');
-}
-
-  
+  data() {
+    return {
+      totalPoints: 0,
+    };
+  },
+  methods: {
+    updatePoints(newPoints) {
+      this.totalPoints = newPoints;
+    },
+  },
 };
 </script>
 
@@ -41,6 +46,5 @@ body {
   text-align: center;
   align-content: center;
   height: fit-content;
-
 }
 </style>

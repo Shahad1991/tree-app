@@ -1,34 +1,27 @@
 <template>
   <h2>Hvordan har dit El-forbrug været? </h2>
-  <v-container>
-    <v-row>
-      <!-- Tjekliste container -->
-      <v-col cols="12" sm="6" v-for="item in checklistItems" :key="item.name">
-        <v-card class="checklist-card" :class="{ 'selected': selectedItems.includes(item) }">
-          <v-checkbox
-            v-model="selectedItems"
-            :label="item.name"
-            :value="item"
-            @change="calculatePoints"
-            class="custom-checkbox"
-          ></v-checkbox>
-          
-        </v-card>
-      </v-col>
-    </v-row>
-
-    <!-- PointsDisplay komponent viser totalen -->
-    
-  </v-container>
+  <CheckList
+    :checklistItems="checklistItems"
+    :selectedItems="selectedItems"
+    @update:selectedItems="updateSelectedItems"
+  />
+  <CalculatePoints
+    :selectedItems="selectedItems"
+    @update:points="emitUpdatePoints"
+  />
   <PointsDisplay :points="totalPoints" />
 </template>
 
 <script>
-import PointsDisplay from '../PointsDisplay.vue'; // Juster stien, hvis nødvendigt
+import PointsDisplay from '../PointsDisplay.vue';
+import CheckList from './CheckList.vue';
+import CalculatePoints from './CalculatePoints.vue';
 
 export default {
   components: {
     PointsDisplay,
+    CheckList,
+    CalculatePoints,
   },
   data() {
     return {
@@ -46,47 +39,52 @@ export default {
     };
   },
   methods: {
-    calculatePoints() {
-      // Beregner totalen baseret på valgte elementer
-      this.totalPoints = this.selectedItems.reduce((acc, item) => acc + item.points, 0);
+    updateSelectedItems(newSelectedItems) {
+      this.selectedItems = newSelectedItems;
+    },
+    emitUpdatePoints(newPoints) {
+      this.totalPoints = newPoints;
+      this.$emit('update:points', newPoints);
     },
   },
 };
 </script>
 
 <style scoped>
-.v-container {
-  justify-content: center;
-  margin: 60px;
-  background-color: #ffcc00;
-  padding: 20px;
-  border: 3px solid #ccc;
-  
-}
-.checklist-card {
-  margin: 3px;
-  padding: 1px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  transition: background-color 0.3s ease;
-}
+  h2 {
+    text-align: center;
+    color: #1E7F85; /* Title color */
+    margin: 20px; /* Space below the title */
+  }
 
-.checklist-card.selected {
-  background-color: #4caf50; /* Grøn farve når valgt */
-  color: white; /* Ændrer tekstfarven til hvid */
-}
+  .v-container {
+    justify-content: center;
+    margin: 20px; /* Reduced margin for mobile */
+    background-color: #1E7F85; /* Background color */
+    padding: 20px; /* Padding inside the container */
+    border: 3px solid #ccc; /* Border */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  }
 
-.custom-checkbox {
-  color: #4caf50; /* Standard farve for checkbox */
-}
+  .checklist-card {
+    margin: 5px 0; /* Margin for each checklist item */
+    padding: 8px; /* Padding inside the card for touch */
+    border: 1px solid #ccc; /* Border around the checklist card */
+    border-radius: 8px; /* Rounded corners */
+    transition: background-color 0.3s ease; /* Smooth transition */
+  }
 
-.custom-checkbox input:checked ~ .v-input__control .v-input__slot {
-  background-color: #a6c9a8; /* Baggrundsfarve når checkbox er valgt */
-}
-h2  {
-  color: #ffcc00;
-  font-size: 30px;
-  text-align: center;
-}
+  .checklist-card.selected {
+    background-color: #4caf50; /* Green color when selected */
+    color: white; /* Text color when selected */
+  }
 
-</style>
+  .custom-checkbox {
+    color: #4caf50; /* Checkbox color */
+  }
+
+  .custom-checkbox input:checked ~ .v-input__control .v-input__slot {
+    background-color: #a6c9a8;
+  }
+  </style>

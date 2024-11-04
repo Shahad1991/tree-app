@@ -27,7 +27,6 @@
   color: black; /* Hvid tekstfarve */
   padding: 16px; /* Padding for pointdisplay */
   text-align: center;
--top: 60px;
-}
+ }
 </style>
   

@@ -41,10 +41,10 @@ export default {
     return {
       activeIndex: null,
       menuItems: [
-        { icon: elIcon, route: '/menu-items', class: 'bg-el' },
+        { icon: elIcon, route: '/el-use', class: 'bg-el' },
         { icon: transportIcon, route: '/transport', class: 'bg-transport' },
         { icon: inkobIcon, route: '/inkob', class: 'bg-inkob' },
-        { icon: foodIcon, route: '/food', class: 'bg-food' },
+        { icon: foodIcon, route: '/food-waste', class: 'bg-food' },
       ],
     };
   },
@@ -67,7 +67,7 @@ export default {
 }
 
 .bg-el {
-  background-color: #ffcc00;
+  background-color: #1E7F85;
 }
 
 .bg-transport {

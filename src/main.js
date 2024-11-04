@@ -5,15 +5,16 @@ import 'vuetify/styles';
 import * as components from 'vuetify/components';
 import * as directives from 'vuetify/directives';
 import { createVuetify } from 'vuetify';
-import ElUse from './components/MenuItems/ElUse.vue';
+import ElUse from '@/components/MenuItems/ElUse.vue'; // Adjust path as necessary
+import FoodWaste from '@/components/MenuItems/FoodWaste.vue';
 
 const vuetify = createVuetify({ components, directives });
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    { path: '/menu-items', component: ElUse },
-    // Du kan tilføje flere ruter her i fremtiden
+    { path: '/el-use', component: ElUse },
+    { path: '/food-waste', component: FoodWaste },
   ],
 });
 
