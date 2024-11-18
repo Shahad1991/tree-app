@@ -92,7 +92,6 @@ export default {
   margin: 20px; /* Reduced margin for mobile */
   padding: 10px; /* Padding inside the container */
   border-radius: 10px; /* Rounded corners */
-
 }
 .checklist-card {
   margin: 5px 0; /* Margin for each checklist item */

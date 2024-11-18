@@ -4,6 +4,7 @@ import { createStore } from 'vuex';
 export default createStore({
   state: {
     userInfo: {
+      id: 1, // Sørg for, at id er defineret
       name: '',
       // andre brugeroplysninger
     },
