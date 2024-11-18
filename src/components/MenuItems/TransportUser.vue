@@ -1,9 +1,8 @@
 <template>
-
-  <v-app class="energy-consumption" id="energy-consumption">
+  <v-app class="transport" id="transport">
     <v-container fluid fill-height :style="{ backgroundColor: '#E9E5E5', width: '100%', padding: '25px' }">
       <v-col cols="12" md="8" lg="4" class="text-center">
-        <h2 class="question">Hvordan har dit El-forbrug været?</h2>
+        <h2 class="question">Hvordan har din transport været?</h2>
       </v-col>
 
       <v-col
@@ -11,7 +10,7 @@
         md="8"
         lg="4"
         align="center"
-        :style="{ backgroundColor: '#1E7F85', borderRadius: '25px', padding: '24px', width: '485px', marginBottom: '24px' }"
+        :style="{ backgroundColor: '#E59182', borderRadius: '25px', padding: '24px', width: '485px', marginBottom: '24px' }"
       >
         <CheckList
           :checklistItems="checklistItems"
@@ -20,13 +19,12 @@
         />
       </v-col>
 
-      <ArrowComponent nextRoute="/" previousRoute="/TransportComponent" />
+      <ArrowComponent nextRoute="/ScorepointComponent" previousRoute="/UsedThingComponent" />
 
       <PointsDisplay :points="totalPoints" />
     </v-container>
   </v-app>
 </template>
-
 
 <script>
 import CheckList from './CheckList.vue';
@@ -42,13 +40,13 @@ export default {
   data() {
     return {
       checklistItems: [
-        { name: "Sluk for lys", score: 100 },
-        { name: "Skift til LED-pærer", score: 200 },
-        { name: "Vask i kold vand", score: 75 },
-        { name: "Tør tøj naturligt", score: 50 },
-        { name: "Brug energivenlige stik til apparater", score: 25 },
-        { name: "Brug energibesparende apparater", score: 50 },
-        { name: "Brug mindre varme", score: -100 },
+        { id: 1, name: "Brug offentlig transport", score: 100 },
+        { id: 2, name: "Cykel i stedet for at køre", score: 200 },
+        { id: 3, name: "Gå i stedet for at køre", score: 150 },
+        { id: 4, name: "Del bil med andre", score: 75 },
+        { id: 5, name: "Brug elbil", score: 50 },
+        { id: 6, name: "Reducer flyrejser", score: 100 },
+        { id: 7, name: "Brug samkørsel", score: 50 },
       ],
     };
   },
@@ -78,7 +76,7 @@ export default {
   border-radius: 10px;
 }
 
-.energy-consumption {
+.transport {
   background-color: #E9E5E5;
   width: 100%;
   padding: 0;

@@ -1,92 +1,117 @@
 <template>
-    <h2>Hvordan har dit madspild været? </h2>
-    <Checklist
-      :checklistItems="checklistItems"
-      :selectedItems="selectedItems"
-      @update:selectedItems="updateSelectedItems"
-    />
-    <CalculatePoints
-      :selectedItems="selectedItems"
-      @update:points="emitUpdatePoints"
-    />
-    <PointsDisplay :points="totalPoints" />
+  <v-app class="foodwaste" id="foodwaste">
+    <v-container fluid fill-height :style="{ backgroundColor: '#E9E5E5', width: '100%', padding: '25px' }">
+      <v-col cols="12" md="8" lg="4" class="text-center">
+        <h2 class="question">Hvordan har dit madspild været?</h2>
+      </v-col>
+
+      <v-col
+        cols="12"
+        md="8"
+        lg="4"
+        align="center"
+        :style="{ backgroundColor: '#E59182', borderRadius: '25px', padding: '24px', width: '485px', marginBottom: '24px' }"
+      >
+        <CheckList
+          :checklistItems="checklistItems"
+          :selectedItems="selectedItems"
+          @update:selectedItems="updateSelectedItems"
+        />
+      </v-col>
+
+      <ArrowComponent nextRoute="/summaryUser" previousRoute="/summaryUser" />
+
+      <PointsDisplay :points="totalPoints" />
+    </v-container>
+  </v-app>
 </template>
-  
+
 <script>
-  import PointsDisplay from '../PointsDisplay.vue';
-  import Checklist from './CheckList.vue';
-  import CalculatePoints from './CalculatePoints.vue';
-  
-  export default {
-    components: {
-      PointsDisplay,
-      Checklist,
-      CalculatePoints,
+import CheckList from './CheckList.vue';
+import PointsDisplay from './PointsDisplay.vue';
+import ArrowComponent from '../ArrowComponent.vue';
+
+export default {
+  components: {
+    PointsDisplay,
+    CheckList,
+    ArrowComponent,
+  },
+  data() {
+    return {
+      checklistItems: [
+        { id: 1, name: "Køb lokale råvarer", score: 100 },
+        { id: 2, name: "Spis vegetarisk", score: 200 },
+        { id: 3, name: "Undgå madspild", score: 150 },
+        { id: 4, name: "Køb økologiske produkter", score: 75 },
+        { id: 5, name: "Lav hjemmelavet mad frem for færdigretter", score: 50 },
+        { id: 6, name: "Brug genanvendelige emballager", score: 100 },
+        { id: 7, name: "Drik vand fra hanen i stedet for flaskevand", score: 50 },
+        { id: 8, name: "Reducer kødindtag", score: 150 },
+      ],
+    };
+  },
+  computed: {
+    selectedItems() {
+      return this.$store.state.selectedItems; // Get selected items from Vuex state
     },
-    data() {
-      return {
-        checklistItems: [
-          { name: "Køb lokale råvarer", points: 100 },
-          { name: "Spis vegetarisk", points: 200 },
-          { name: "Undgå madspild", points: 150 },
-          { name: "Køb økologiske produkter", points: 75 },
-          { name: "Lav hjemmelavet mad frem for færdigretter", points: 50 },
-          { name: "Brug genanvendelige emballager", points: 100 },
-          { name: "Drik vand fra hanen i stedet for flaskevand", points: 50 },
-          { name: "Reducer kødindtag", points: 150 },
-        ],
-        selectedItems: [],
-        totalPoints: 0,
-      };
+    totalPoints() {
+      return this.$store.getters.getTotalPoints; // Get total points from Vuex getter
     },
-    methods: {
-      updateSelectedItems(newSelectedItems) {
-        this.selectedItems = newSelectedItems;
-      },
-      emitUpdatePoints(newPoints) {
-        this.totalPoints = newPoints;
-        this.$emit('update:points', newPoints);
-      },
+  },
+  methods: {
+    updateSelectedItems(newSelectedItems) {
+      this.$store.dispatch('updateSelectedItems', newSelectedItems); // Update selected items in Vuex
+      this.$store.dispatch('updateTotalPoints'); // Recalculate total points after updating selected items
     },
-  };
+  },
+};
 </script>
-  
+
 <style scoped>
-  h2 {
-    text-align: center;
-    color: #E59182; /* Text color for the title */
-    margin: 20px; /* Space below the title */
-  }
+.v-container {
+  justify-content: center;
+  margin: 10px;
+  background-color: #1E7F85;
+  padding: 20px;
+  border-radius: 10px;
+}
 
-  .v-container {
-    justify-content: center;
-    margin: 10px; /* Reduced margin for smaller screens */
-    background-color: #E59182; /* Background color */
-    padding: 20px; /* Padding around the container */
-    border: 5px solid #ccc; /* Border around the container */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  }
+.foodwaste {
+  background-color: #E9E5E5;
+  width: 100%;
+  padding: 0;
+}
 
-  .checklist-card {
-    margin: 3px 0; /* Margin for each checklist item */
-    padding: 10px; /* Padding inside the card */
-    border: 1px solid #ccc; /* Border around the checklist card */
-    border-radius: 8px; /* Rounded corners for cards */
-    transition: background-color 0.3s ease; /* Smooth transition for background color */
-  }
+.question {
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 24px;
+  color: black;
+}
 
-  .checklist-card.selected {
-    background-color: #4caf50; /* Green color when selected */
-    color: white; /* Change text color to white */
-  }
+.checklist-card {
+  margin: 3px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
 
-  .custom-checkbox {
-    color: #4caf50; /* Default color for checkbox */
-  }
+.checklist-card.selected {
+  background-color: #4caf50;
+  color: white;
+}
 
-  .custom-checkbox input:checked ~ .v-input__control .v-input__slot {
-    background-color: #a6c9a8; /* Background color when checkbox is checked */
-  }
+.v-row {
+  margin-top: 20px;
+}
 
+.custom-checkbox input:checked ~ .v-input__control .v-input__slot {
+  background-color: #a6c9a8;
+}
+
+.v-label {
+  color: black;
+}
 </style>

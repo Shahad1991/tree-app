@@ -3,18 +3,18 @@
   <main>
     <router-view @update:points="updatePoints"></router-view>
   </main>
+  <test-api></test-api>
   <!-- Passer totalPoints til PointsDisplay -->
-  <PointsDisplay :points="totalPoints"></PointsDisplay>
 </template>
 
 <script>
 import NavigationsMenu from './components/NavigationsMenu.vue';
-import PointsDisplay from './components/PointsDisplay.vue';
+import TestApi from './components/TestApi.vue';
 
 export default {
   components: {
     NavigationsMenu,
-    PointsDisplay,
+    TestApi,
   },
   data() {
     return {
