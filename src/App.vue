@@ -4,17 +4,14 @@
     <router-view @update:points="updatePoints"></router-view>
   </main>
   <!-- Passer totalPoints til PointsDisplay -->
-  <PointsDisplay :points="totalPoints"></PointsDisplay>
 </template>
 
 <script>
 import NavigationsMenu from './components/NavigationsMenu.vue';
-import PointsDisplay from './components/PointsDisplay.vue';
 
 export default {
   components: {
     NavigationsMenu,
-    PointsDisplay,
   },
   data() {
     return {

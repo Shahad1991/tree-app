@@ -1,26 +1,54 @@
 <template>
   <v-container>
-    <v-row>
-      <v-col cols="12" sm="6" v-for="item in checklistItems" :key="item.name">
-        <v-card class="checklist-card" :class="{ 'selected': localSelectedItems.includes(item) }">
-          <v-checkbox
-            v-model="localSelectedItems"
-            :label="item.name"
-            :value="item"
-            class="custom-checkbox"
-            @change="updateSelectedItems"
-          ></v-checkbox>
-        </v-card>
-      </v-col>
-    </v-row>
+    <v-col
+      cols="12"
+      md="8"
+      lg="4"
+      align="center"
+      :style="{ backgroundColor: '#8FCACA', borderRadius: '25px', padding: '24px', width: '485px', marginBottom: '24px' }"
+    >
+      <v-list :style="{ backgroundColor: '#8FCACA', flexDirection: 'column', alignItems: 'center' }">
+        <v-list-item-group>
+          <v-list-item
+            v-for="item in checklistItems"
+            :key="item.id"
+            @click="selectItem(item)"
+            :class="{ 'selected': localSelectedItems.includes(item), 'disabled': localSelectedItems.length && !localSelectedItems.includes(item) }"
+            :style="itemStyle(item)"
+            class="checklist-card"
+          >
+            <v-list-item-content>
+              <v-list-item-title>{{ item.name }}</v-list-item-title>
+              <v-list-item-subtitle> Score: {{ item.score }}</v-list-item-subtitle>
+            </v-list-item-content>
+            <v-list-item-action>
+              <v-checkbox
+                v-model="localSelectedItems"
+                :value="item"
+                :disabled="localSelectedItems.length && !localSelectedItems.includes(item)"
+                :aria-label="item.name"
+                class="custom-checkbox"
+                @change="updateSelectedItems"
+              />
+            </v-list-item-action>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-col>
   </v-container>
 </template>
 
 <script>
 export default {
   props: {
-    checklistItems: Array,
-    selectedItems: Array,
+    checklistItems: {
+      type: Array,
+      required: true,
+    },
+    selectedItems: {
+      type: Array,
+      required: true,
+    },
   },
   data() {
     return {
@@ -37,9 +65,22 @@ export default {
     },
   },
   methods: {
+    selectItem(item) {
+      if (this.localSelectedItems.includes(item)) {
+        this.localSelectedItems = this.localSelectedItems.filter(i => i !== item);
+      } else {
+        this.localSelectedItems.push(item);
+      }
+      this.updateSelectedItems();
+    },
     updateSelectedItems() {
       // Udsender opdaterede valgte elementer til forælderen
       this.$emit('update:selectedItems', this.localSelectedItems);
+    },
+    itemStyle(item) {
+      return this.localSelectedItems.includes(item)
+        ? { backgroundColor: '#4caf50' }
+        : { backgroundColor: '#D9D9D9' };
     },
   },
 };
@@ -48,26 +89,25 @@ export default {
 <style scoped>
 .v-container {
   justify-content: center;
-  margin: 60px;
-  background-color: #ffcc00;
-  padding: 20px;
-  border: 3px solid #ccc;
+  margin: 20px; /* Reduced margin for mobile */
+  padding: 10px; /* Padding inside the container */
+  border-radius: 10px; /* Rounded corners */
+
 }
 .checklist-card {
-  margin: 3px;
-  padding: 1px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  transition: background-color 0.3s ease;
+  margin: 5px 0; /* Margin for each checklist item */
+  padding: 8px; /* Padding inside the card for touch */
+  border: 1px solid #ccc; /* Border around the checklist card */
+  transition: background-color 0.3s ease; /* Smooth transition */
 }
 .checklist-card.selected {
-  background-color: #4caf50; /* Grøn farve når valgt */
-  color: white; /* Ændrer tekstfarven til hvid */
+  background-color: #4caf50; /* Green color when selected */
+  color: white; /* Text color when selected */
 }
 .custom-checkbox {
-  color: #4caf50; /* Standard farve for checkbox */
+  color: #4caf50; /* Checkbox color */
 }
 .custom-checkbox input:checked ~ .v-input__control .v-input__slot {
-  background-color: #a6c9a8; /* Baggrundsfarve når checkbox er valgt */
+  background-color: #a6c9a8;
 }
 </style>

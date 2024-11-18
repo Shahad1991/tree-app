@@ -1,90 +1,118 @@
 <template>
-  <h2>Hvordan har dit El-forbrug været? </h2>
-  <CheckList
-    :checklistItems="checklistItems"
-    :selectedItems="selectedItems"
-    @update:selectedItems="updateSelectedItems"
-  />
-  <CalculatePoints
-    :selectedItems="selectedItems"
-    @update:points="emitUpdatePoints"
-  />
-  <PointsDisplay :points="totalPoints" />
+
+  <v-app class="energy-consumption" id="energy-consumption">
+    <v-container fluid fill-height :style="{ backgroundColor: '#E9E5E5', width: '100%', padding: '25px' }">
+      <v-col cols="12" md="8" lg="4" class="text-center">
+        <h2 class="question">Hvordan har dit El-forbrug været?</h2>
+      </v-col>
+
+      <v-col
+        cols="12"
+        md="8"
+        lg="4"
+        align="center"
+        :style="{ backgroundColor: '#1E7F85', borderRadius: '25px', padding: '24px', width: '485px', marginBottom: '24px' }"
+      >
+        <CheckList
+          :checklistItems="checklistItems"
+          :selectedItems="selectedItems"
+          @update:selectedItems="updateSelectedItems"
+        />
+      </v-col>
+
+      <ArrowComponent nextRoute="/" previousRoute="/TransportComponent" />
+
+      <PointsDisplay :points="totalPoints" />
+    </v-container>
+  </v-app>
 </template>
 
+
 <script>
-import PointsDisplay from '../PointsDisplay.vue';
 import CheckList from './CheckList.vue';
-import CalculatePoints from './CalculatePoints.vue';
+import PointsDisplay from './PointsDisplay.vue';
+import ArrowComponent from '../ArrowComponent.vue';
 
 export default {
   components: {
     PointsDisplay,
     CheckList,
-    CalculatePoints,
+    ArrowComponent,
   },
   data() {
     return {
       checklistItems: [
-        { name: "Sluk for lys", points: 100 },
-        { name: "Skift til LED-pærer)", points: 200 },
-        { name: "Vask i kold vand", points: 75 },
-        { name: "Tør tøj naturligt", points: 50 },
-        { name: "Brug energivenlige stik til apparater", points: 25 },
-        { name: "Brug energibesparende apparater", points: 50 },
-        { name: "Brug mindre varme", points: -100 },
+        { name: "Sluk for lys", score: 100 },
+        { name: "Skift til LED-pærer", score: 200 },
+        { name: "Vask i kold vand", score: 75 },
+        { name: "Tør tøj naturligt", score: 50 },
+        { name: "Brug energivenlige stik til apparater", score: 25 },
+        { name: "Brug energibesparende apparater", score: 50 },
+        { name: "Brug mindre varme", score: -100 },
       ],
-      selectedItems: [], // Brugervalgt liste
-      totalPoints: 0, // Samlede point
     };
+  },
+  computed: {
+    selectedItems() {
+      return this.$store.state.selectedItems; // Get selected items from Vuex state
+    },
+    totalPoints() {
+      return this.$store.getters.getTotalPoints; // Get total points from Vuex getter
+    },
   },
   methods: {
     updateSelectedItems(newSelectedItems) {
-      this.selectedItems = newSelectedItems;
-    },
-    emitUpdatePoints(newPoints) {
-      this.totalPoints = newPoints;
-      this.$emit('update:points', newPoints);
+      this.$store.dispatch('updateSelectedItems', newSelectedItems); // Update selected items in Vuex
+      this.$store.dispatch('updateTotalPoints'); // Recalculate total points after updating selected items
     },
   },
 };
 </script>
 
 <style scoped>
-  h2 {
-    text-align: center;
-    color: #1E7F85; /* Title color */
-    margin: 20px; /* Space below the title */
-  }
+.v-container {
+  justify-content: center;
+  margin: 10px;
+  background-color: #1E7F85;
+  padding: 20px;
+  border-radius: 10px;
+}
 
-  .v-container {
-    justify-content: center;
-    margin: 20px; /* Reduced margin for mobile */
-    background-color: #1E7F85; /* Background color */
-    padding: 20px; /* Padding inside the container */
-    border: 3px solid #ccc; /* Border */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  }
+.energy-consumption {
+  background-color: #E9E5E5;
+  width: 100%;
+  padding: 0;
+}
 
-  .checklist-card {
-    margin: 5px 0; /* Margin for each checklist item */
-    padding: 8px; /* Padding inside the card for touch */
-    border: 1px solid #ccc; /* Border around the checklist card */
-    border-radius: 8px; /* Rounded corners */
-    transition: background-color 0.3s ease; /* Smooth transition */
-  }
+.question {
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 24px;
+  color: black;
+}
 
-  .checklist-card.selected {
-    background-color: #4caf50; /* Green color when selected */
-    color: white; /* Text color when selected */
-  }
+.checklist-card {
+  margin: 3px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
 
-  .custom-checkbox {
-    color: #4caf50; /* Checkbox color */
-  }
+.checklist-card.selected {
+  background-color: #4caf50;
+  color: white;
+}
 
-  .custom-checkbox input:checked ~ .v-input__control .v-input__slot {
-    background-color: #a6c9a8;
-  }
-  </style>
+.v-row {
+  margin-top: 20px;
+}
+
+.custom-checkbox input:checked ~ .v-input__control .v-input__slot {
+  background-color: #a6c9a8;
+}
+
+.v-label {
+  color: black;
+}
+</style>

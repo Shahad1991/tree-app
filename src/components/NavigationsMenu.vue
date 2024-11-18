@@ -41,10 +41,10 @@ export default {
     return {
       activeIndex: null,
       menuItems: [
-        { icon: elIcon, route: '/el-use', class: 'bg-el' },
-        { icon: transportIcon, route: '/transport', class: 'bg-transport' },
-        { icon: inkobIcon, route: '/inkob', class: 'bg-inkob' },
-        { icon: foodIcon, route: '/food-waste', class: 'bg-food' },
+        { icon: elIcon, route: '/elUse', class: 'bg-el' },
+        { icon: transportIcon, route: '/transportUser', class: 'bg-transport' },
+        { icon: inkobIcon, route: '/UsedThing', class: 'bg-inkob' },
+        { icon: foodIcon, route: '/foodWaste', class: 'bg-food' },
       ],
     };
   },
