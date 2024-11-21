@@ -11,6 +11,7 @@ import SummaryUser from './components/SummaryUser.vue';
 import TransportUser from './components/MenuItems/TransportUser.vue'; // Import TransportUser component
 import UsedThing from './components/MenuItems/UsedThing.vue'; // Import UsedThing component
 import HomeSide from './components/HomeSide.vue';
+import UsersList from './components/UsersList.vue';
 
 
 // Import the Vuetify components and directives
@@ -38,6 +39,8 @@ const router = createRouter({
     { path: '/usedThing', component: UsedThing },
     { path: '/summaryUser', component: SummaryUser},
     { path: '/homeSide', component: HomeSide},
+    { path: '/usersList', component: UsersList},
+
 
 
   ],

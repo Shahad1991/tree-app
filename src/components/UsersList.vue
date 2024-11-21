@@ -76,6 +76,10 @@ export default {
 }
 
 .highest-points {
+
+  background-color: rgb(123, 214, 123); /* Guld farve for brugeren med de højeste point */
+
   background-color: rgb(41, 136, 41); /* Guld farve for brugeren med de højeste point */
+
 }
 </style>

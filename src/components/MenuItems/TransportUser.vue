@@ -1,25 +1,17 @@
 <template>
   <v-app class="transport" id="transport">
-    <v-container fluid fill-height :style="{ backgroundColor: '#E9E5E5', width: '100%', padding: '25px' }">
+    <v-container fluid fill-height :style="{ width: '100%', padding: '25px' }">
       <v-col cols="12" md="8" lg="4" class="text-center">
         <h2 class="question">Hvordan har din transport været?</h2>
       </v-col>
 
-      <v-col
-        cols="12"
-        md="8"
-        lg="4"
-        align="center"
-        :style="{ backgroundColor: '#E59182', borderRadius: '25px', padding: '24px', width: '485px', marginBottom: '24px' }"
-      >
-        <CheckList
+        <CheckList :style="{ backgroundColor: '#8981A8', width: '100%' }"
           :checklistItems="checklistItems"
           :selectedItems="selectedItems"
           @update:selectedItems="updateSelectedItems"
         />
-      </v-col>
-
-      <ArrowComponent nextRoute="/ScorepointComponent" previousRoute="/UsedThingComponent" />
+    
+      <ArrowComponent nextRoute="/usedThing" previousRoute="/transportUser" />
 
       <PointsDisplay :points="totalPoints" />
     </v-container>
@@ -39,15 +31,7 @@ export default {
   },
   data() {
     return {
-      checklistItems: [
-        { id: 1, name: "Brug offentlig transport", score: 100 },
-        { id: 2, name: "Cykel i stedet for at køre", score: 200 },
-        { id: 3, name: "Gå i stedet for at køre", score: 150 },
-        { id: 4, name: "Del bil med andre", score: 75 },
-        { id: 5, name: "Brug elbil", score: 50 },
-        { id: 6, name: "Reducer flyrejser", score: 100 },
-        { id: 7, name: "Brug samkørsel", score: 50 },
-      ],
+      checklistItems: [],
     };
   },
   computed: {
@@ -58,7 +42,19 @@ export default {
       return this.$store.getters.getTotalPoints; // Get total points from Vuex getter
     },
   },
+  created() {
+    this.fetchChecklistItems();
+  },
   methods: {
+    async fetchChecklistItems() {
+      try {
+        const response = await fetch('http://localhost:3000/api/checklists/transport');
+        const data = await response.json();
+        this.checklistItems = data;
+      } catch (error) {
+        console.error('Error fetching checklist items:', error);
+      }
+    },
     updateSelectedItems(newSelectedItems) {
       this.$store.dispatch('updateSelectedItems', newSelectedItems); // Update selected items in Vuex
       this.$store.dispatch('updateTotalPoints'); // Recalculate total points after updating selected items
@@ -71,7 +67,6 @@ export default {
 .v-container {
   justify-content: center;
   margin: 10px;
-  background-color: #1E7F85;
   padding: 20px;
   border-radius: 10px;
 }

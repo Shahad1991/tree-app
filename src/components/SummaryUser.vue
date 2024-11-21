@@ -10,17 +10,22 @@
       <v-col cols="12" md="8" lg="4" align="center">
         <PointsDisplay :points="totalPoints" />
         <v-btn color="primary" @click="savePoints">Gem point</v-btn>
+        <v-btn color="secondary" @click="goBack">Tilbage</v-btn>
       </v-col>
     </v-container>
+
+    <UsersList></UsersList>
   </v-app>
 </template>
 
 <script>
-import PointsDisplay from './MenuItems/PointsDisplay.vue'; // Opdateret sti
+import PointsDisplay from './MenuItems/PointsDisplay.vue'; 
+import UsersList from './UsersList.vue';
 
 export default {
   components: {
     PointsDisplay,
+    UsersList,
   },
   computed: {
     userName() {
@@ -50,7 +55,7 @@ export default {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            userId: this.userId, // Assuming you have user ID stored in userInfo
+            userId: this.userId, // Sender user ID til backend
             name: this.userName,
             points: this.totalPoints,
           })
@@ -62,6 +67,9 @@ export default {
         console.error('Error saving points:', error);
         alert('Der opstod en fejl ved gemning af point.');
       }
+    },
+    goBack() {
+      this.$router.go(-1); // Naviger tilbage til den forrige side
     },
   },
 };
@@ -98,6 +106,12 @@ export default {
 .total-points {
   font-size: 18px;
   margin-top: 10px;
+  margin-bottom: 50px; /* Tilføj margin-bottom for at adskille elementerne */
   color: black;
+}
+
+.action-button {
+  margin-top: 30px; /* Tilføj margin-top for at adskille knapperne */
+  margin-bottom: 10px; /* Tilføj margin-bottom for at adskille knapperne */
 }
 </style>
