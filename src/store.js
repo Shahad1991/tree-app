@@ -4,7 +4,7 @@ import { createStore } from 'vuex';
 export default createStore({
   state: {
     userInfo: {
-      id: 1, // Sørg for, at id er defineret
+      id: null, // Sørg for, at id er defineret som null initialt
       name: '',
       // andre brugeroplysninger
     },
@@ -13,7 +13,7 @@ export default createStore({
   },
   mutations: {
     setUserInfo(state, info) {
-      state.userInfo = info;
+      state.userInfo = { ...state.userInfo, ...info };
     },
     updateSelectedItems(state, items) {
       state.selectedItems = items;

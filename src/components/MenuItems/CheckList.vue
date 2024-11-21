@@ -4,10 +4,9 @@
       cols="12"
       md="8"
       lg="4"
-      align="center"
-      :style="{ backgroundColor: '#8FCACA', borderRadius: '25px', padding: '24px', width: '485px', marginBottom: '24px' }"
+      :style="{ borderRadius: '25px', width: '485px', marginBottom: '24px' }"
     >
-      <v-list :style="{ backgroundColor: '#8FCACA', flexDirection: 'column', alignItems: 'center' }">
+      <v-list :style="{flexDirection: 'column', alignItems: 'center'}">
         <v-list-item-group>
           <v-list-item
             v-for="item in checklistItems"
@@ -19,18 +18,8 @@
           >
             <v-list-item-content>
               <v-list-item-title>{{ item.name }}</v-list-item-title>
-              <v-list-item-subtitle> Score: {{ item.score }}</v-list-item-subtitle>
             </v-list-item-content>
-            <v-list-item-action>
-              <v-checkbox
-                v-model="localSelectedItems"
-                :value="item"
-                :disabled="localSelectedItems.length && !localSelectedItems.includes(item)"
-                :aria-label="item.name"
-                class="custom-checkbox"
-                @change="updateSelectedItems"
-              />
-            </v-list-item-action>
+            
           </v-list-item>
         </v-list-item-group>
       </v-list>
@@ -92,11 +81,13 @@ export default {
   margin: 20px; /* Reduced margin for mobile */
   padding: 10px; /* Padding inside the container */
   border-radius: 10px; /* Rounded corners */
+
 }
 .checklist-card {
-  margin: 5px 0; /* Margin for each checklist item */
+  margin: 12px 0; /* Margin for each checklist item */
   padding: 8px; /* Padding inside the card for touch */
-  border: 1px solid #ccc; /* Border around the checklist card */
+  border: 1px ; /* Border around the checklist card */
+  box-shadow: #a6c9a8;
   transition: background-color 0.3s ease; /* Smooth transition */
 }
 .checklist-card.selected {
@@ -109,4 +100,6 @@ export default {
 .custom-checkbox input:checked ~ .v-input__control .v-input__slot {
   background-color: #a6c9a8;
 }
+
+
 </style>
