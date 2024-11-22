@@ -4,7 +4,7 @@
       cols="12"
       md="8"
       lg="4"
-      :style="{ borderRadius: '25px', width: '485px', marginBottom: '24px' }"
+      :style="{ borderRadius: '25px', width: '485px'}"
     >
       <v-list :style="{flexDirection: 'column', alignItems: 'center'}">
         <v-list-item-group>
@@ -78,14 +78,13 @@ export default {
 <style scoped>
 .v-container {
   justify-content: center;
-  margin: 20px; /* Reduced margin for mobile */
   padding: 10px; /* Padding inside the container */
   border-radius: 10px; /* Rounded corners */
 
 }
 .checklist-card {
   margin: 12px 0; /* Margin for each checklist item */
-  padding: 8px; /* Padding inside the card for touch */
+  padding: 10px; /* Padding inside the card for touch */
   border: 1px ; /* Border around the checklist card */
   box-shadow: #a6c9a8;
   transition: background-color 0.3s ease; /* Smooth transition */
@@ -100,6 +99,8 @@ export default {
 .custom-checkbox input:checked ~ .v-input__control .v-input__slot {
   background-color: #a6c9a8;
 }
-
+.v-list{
+  background: none;
+}
 
 </style>
