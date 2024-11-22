@@ -1,12 +1,6 @@
 <template>
-  <v-app>
-    <v-app-bar app>
-      <v-toolbar-title class="text-center">
-        <!-- Title or Logo could go here -->
-      </v-toolbar-title>
-      <v-spacer></v-spacer> <!-- Spacer on the left -->
-
-      <v-list class="d-flex justify-center align-center" style="width: 100%;">
+  
+      <v-list class="d-flex justify-center align-center" style="width: 100%; background: #fff;" >
         <v-list-item
           v-for="(item, index) in menuItems"
           :key="index"
@@ -23,11 +17,6 @@
         </v-list-item>
       </v-list>
 
-      <v-spacer></v-spacer> <!-- Spacer on the right -->
-    </v-app-bar>
-
-    <router-view />
-  </v-app>
 </template>
 
 <script>
