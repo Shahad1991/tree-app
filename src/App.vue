@@ -2,7 +2,7 @@
   <NavigationsMenu></NavigationsMenu>
   <home-side></home-side>
   
-    <router-view @update:points="updatePoints"></router-view>
+  <router-view @update:points="updatePoints"></router-view>
  
   
  
@@ -40,7 +40,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: black;
-  margin-top: 60px;
 }
 body {
   background-color: #f0f0f0;
