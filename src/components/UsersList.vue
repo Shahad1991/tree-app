@@ -1,5 +1,5 @@
 <template>
-  <v-app class="users-list" id="users-list">
+ 
     <v-container fluid fill-height :style="{ backgroundColor: '#E9E5E5', width: '100%', padding: '25px' }">
       <v-col cols="12" md="8" lg="6" class="text-center">
         <h2 class="question">Liste af brugere med point</h2>
@@ -16,7 +16,7 @@
         </v-list>
       </v-col>
     </v-container>
-  </v-app>
+  
 </template>
 
 <script>
