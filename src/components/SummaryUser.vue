@@ -1,5 +1,5 @@
 <template>
-  <v-app class="summary" id="summary">
+  
     <v-container fluid fill-height :style="{ backgroundColor: '#E9E5E5', width: '100%', padding: '25px' }">
       <v-col cols="12" md="8" lg="4" class="text-center">
         <h2 class="question">Opsummering af dine point</h2>
@@ -15,7 +15,7 @@
     </v-container>
 
     <UsersList></UsersList>
-  </v-app>
+ 
 </template>
 
 <script>
@@ -78,10 +78,12 @@ export default {
 <style scoped>
 .v-container {
   justify-content: center;
-  margin: 10px;
-  background-color: #1E7F85;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-top: 0;
+  margin-bottom: 2px;
   padding: 20px;
-  border-radius: 10px;
+ 
 }
 
 .summary {
