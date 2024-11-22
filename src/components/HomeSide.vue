@@ -66,6 +66,7 @@ export default {
   justify-content: center;
   padding: 20px;
   border-radius: 10px;
+  height: 100vh;
 }
 
 .home {
