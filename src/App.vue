@@ -1,9 +1,9 @@
 <template>
   <NavigationsMenu></NavigationsMenu>
   <home-side></home-side>
-  <main>
+  
     <router-view @update:points="updatePoints"></router-view>
-  </main>
+ 
   
  
   <!-- Passer totalPoints til PointsDisplay -->
